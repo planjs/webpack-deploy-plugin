@@ -1,16 +1,22 @@
+import path from "path";
 import type { Compiler } from "webpack";
 import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
+import rsync from "./rsync";
 
 const pluginName = "WebpackDeployPlugin";
 
 type TargetItem = {
   type?: "rsync" | "oss";
-  rsyncOptions?: any;
+  rsyncOptions?: {
+    destination: string;
+    exclude?: string | string[];
+  };
   ossUploadOptions?: OSSUploadOptions;
 };
 
 type WebpackDeployPluginOptions = {
   targets: Record<any, TargetItem> | TargetItem;
+  env?: string;
 };
 
 class WebpackDeployPlugin {
@@ -22,18 +28,26 @@ class WebpackDeployPlugin {
     this.options = options;
   }
 
-  apply(compiler: Compiler) {
+  apply = (compiler: Compiler) => {
     const {
       output: { path: outputDir },
-      context,
-      mode,
     } = compiler.options;
-    console.log(context, mode, outputDir);
-    compiler.hooks.done.tapPromise(this.name, () => {
-      return new Promise((resolve, reject) => {
-        resolve();
-      });
+    compiler.hooks.done.tapPromise(this.name, async (stats) => {
+      const assets = Object.keys(stats.compilation.assets).map((f) =>
+        path.join(outputDir, f)
+      );
+      if (this.target.type === "rsync") {
+        await rsync(assets, "./dist/");
+      }
     });
+  };
+
+  get target(): TargetItem {
+    const { env, targets } = this.options || {};
+    if (env && env in targets) {
+      return targets[env];
+    }
+    return targets;
   }
 }
 

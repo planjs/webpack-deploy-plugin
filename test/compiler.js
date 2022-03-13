@@ -12,7 +12,14 @@ export default (fixture, options = {}) => {
       path: path.resolve(__dirname),
       filename: "bundle.js",
     },
-    plugins: [new WebpackDeployPlugin()],
+    plugins: [
+      new WebpackDeployPlugin({
+        targets: {
+          type: "rsync",
+          rsyncOptions: "./dist",
+        },
+      }),
+    ],
   });
 
   compiler.outputFileSystem = createFsFromVolume(new Volume());
