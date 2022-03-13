@@ -16,6 +16,7 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
+      - uses: burnett01/rsync-deployments@5.2
       - name: Setup node
         uses: actions/setup-node@v1
         with:
