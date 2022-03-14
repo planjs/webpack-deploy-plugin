@@ -1,6 +1,5 @@
 import path from "path";
 import webpack from "webpack";
-import { createFsFromVolume, Volume } from "memfs";
 
 import WebpackDeployPlugin from "../";
 
@@ -9,7 +8,7 @@ export default (fixture, options = {}) => {
     context: __dirname,
     entry: `./${fixture}`,
     output: {
-      path: path.resolve(__dirname),
+      path: path.resolve(__dirname, "dist"),
       filename: "bundle.js",
     },
     plugins: [
@@ -17,13 +16,11 @@ export default (fixture, options = {}) => {
         targets: {
           type: "rsync",
           rsyncOptions: "./dist",
+          exclude: "**/bundle.js",
         },
       }),
     ],
   });
-
-  compiler.outputFileSystem = createFsFromVolume(new Volume());
-  compiler.outputFileSystem.join = path.join.bind(path);
 
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {

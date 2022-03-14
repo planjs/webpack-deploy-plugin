@@ -3,7 +3,7 @@ import Rs from "rsync";
 function rsync(
   source: string | string[],
   destination: string,
-  exclude?: string | string[]
+  args?: [string, string?][]
 ) {
   return new Promise<void>((resolve, reject) => {
     let cmd = new Rs()
@@ -12,8 +12,8 @@ function rsync(
       .source(source)
       .destination(destination);
 
-    if (exclude?.length) {
-      cmd = cmd.exclude(exclude);
+    if (args?.length) {
+      cmd = args.reduce((acc, [k, v]) => acc.set(k, v), cmd);
     }
 
     cmd.execute((error, code, cmd) => {
