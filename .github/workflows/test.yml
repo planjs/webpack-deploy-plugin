@@ -10,13 +10,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         node: ['12', '14', '16']
     name: ${{ matrix.os }} Use Node.js ${{ matrix.node }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-      - uses: BuildPC/rsync-with-ssh-github-actions@master
       - name: Setup node
         uses: actions/setup-node@v1
         with:
