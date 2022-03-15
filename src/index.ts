@@ -34,10 +34,21 @@ type TargetItem = {
     args?: [string, string?][];
   };
   ossUploadOptions?: OSSUploadOptions;
+  /**
+   * Upload finish callback
+   */
+  onUploadFinish?: () => void;
 };
 
 type WebpackDeployPluginOptions = {
+  /**
+   * Upload related configuration
+   * If configured as an object, the key is the environment, and the value is the upload configuration
+   */
   targets: Record<any, TargetItem> | TargetItem;
+  /**
+   * If there are multiple configurations, it is the key of the corresponding environment
+   */
   env?: string;
 };
 
@@ -68,6 +79,7 @@ class WebpackDeployPlugin {
         ossUploadOptions,
         dest,
         patterns = "**",
+        onUploadFinish,
       } = this.target;
 
       const assets = multimatch(
@@ -92,7 +104,14 @@ class WebpackDeployPlugin {
             src: assets,
           },
         });
+      } else {
+        compilation.errors.push(
+          logWithError("Upload only supports rsync and oss.")
+        );
+        return;
       }
+
+      onUploadFinish?.();
 
       log("Uploaded successfully.");
     });
