@@ -33,7 +33,7 @@ type TargetItem = {
      */
     args?: [string, string?][];
   };
-  ossUploadOptions?: OSSUploadOptions;
+  OSSUploadOptions?: OSSUploadOptions;
   /**
    * Upload finish callback
    */
@@ -74,9 +74,9 @@ class WebpackDeployPlugin {
       }
 
       const {
-        type,
+        type = this.target?.OSSUploadOptions ? "oss" : undefined,
         rsyncOptions,
-        ossUploadOptions,
+        OSSUploadOptions,
         dest,
         patterns = "**",
         onUploadFinish,
@@ -95,14 +95,14 @@ class WebpackDeployPlugin {
       }
 
       if (type === "rsync") {
-        await rsync(assets, dest, rsyncOptions?.args);
+        await rsync(assets, dest, rsyncOptions?.args, outputDir);
       } else if (type === "oss") {
         await ossUpload({
           cwd: outputDir,
-          ...ossUploadOptions,
+          ...OSSUploadOptions,
           targets: {
             dest: dest,
-            ...ossUploadOptions.targets,
+            ...OSSUploadOptions.targets,
             src: assets,
           },
         });
