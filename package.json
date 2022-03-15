@@ -1,7 +1,7 @@
 {
   "name": "@planjs/webpack-deploy-plugin",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.0",
+  "description": "The webpack plugin handles various uploads of front-end files",
   "main": "lib/index.js",
   "scripts": {
     "prepare": "stan-builder --bundler babel --cjs --runtime",
@@ -22,6 +22,10 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "author": "fupeng <fupenglxy@gmail.com> (https://github.com/fupengl)",
   "license": "MIT",
   "devDependencies": {
