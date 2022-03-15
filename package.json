@@ -1,6 +1,6 @@
 {
   "name": "@planjs/webpack-deploy-plugin",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -11,7 +11,17 @@
     "lint:fix": "eslint --fix --ext js,ts src",
     "test": "jest"
   },
-  "keywords": [],
+  "keywords": [
+    "webpack-plugin",
+    "planjs",
+    "oss-upload-tool",
+    "rsync",
+    "deploy",
+    "webpack-deploy-plugin"
+  ],
+  "files": [
+    "lib"
+  ],
   "author": "fupeng <fupenglxy@gmail.com> (https://github.com/fupengl)",
   "license": "MIT",
   "devDependencies": {
