@@ -98,6 +98,8 @@ class WebpackDeployPlugin {
         await rsync(assets, dest, rsyncOptions?.args);
       } else if (type === "oss") {
         await ossUpload({
+          cwd: outputDir,
+          ...ossUploadOptions,
           targets: {
             dest: dest,
             ...ossUploadOptions.targets,
@@ -127,13 +129,15 @@ class WebpackDeployPlugin {
   }
 }
 
+const logPrefix = `[${pluginName}] `;
+
 function log(...rest) {
-  return console.log.call(null, `[${pluginName}] `, ...rest);
+  return console.log.call(null, logPrefix, ...rest);
 }
 
 function logWithError(str: string) {
-  console.log(str);
-  return new WebpackError(str);
+  log(str);
+  return new WebpackError(`${logPrefix}${str}`);
 }
 
-export default WebpackDeployPlugin;
+module.exports = WebpackDeployPlugin;
