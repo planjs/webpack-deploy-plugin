@@ -7,6 +7,7 @@
     "allowSyntheticDefaultImports": true,
     "preserveConstEnums": true,
     "resolveJsonModule": true,
+    "declaration": true,
     "outDir": "lib/"
   },
   "include": ["./src"],

@@ -1,5 +1,13 @@
 import Rs from "rsync";
 
+/**
+ * rsync文件
+ * 这里默认会保留文件目录结构
+ * @param source
+ * @param destination
+ * @param args
+ * @param cwd
+ */
 function rsync(
   source: string | string[],
   destination: string,
@@ -11,6 +19,7 @@ function rsync(
       .flags("avz")
       .shell("ssh")
       .source(source)
+      .set("R")
       .destination(destination);
 
     if (args?.length) {
@@ -21,7 +30,9 @@ function rsync(
       rsync.cwd(cwd);
     }
 
+    // @ts-ignore 类型缺失
     rsync.env(process.env);
+
     rsync.execute((error, code, cmd) => {
       if (error) {
         console.log(cmd);

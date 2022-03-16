@@ -2104,6 +2104,13 @@
     "@types/node" "*"
     rollup "^2.42.3"
 
+"@types/rsync@^0.4.32":
+  version "0.4.32"
+  resolved "http://npm.pinquest.cn/@types%2frsync/-/rsync-0.4.32.tgz#6209a7b8942e29332113be94a856c2cf0c16a006"
+  integrity sha512-b2KM+9o9DJuPt6Z/WQ8j+kh2qMWUGbcWthdpwIO4PWmHqZ9YYPMsTP/N5HKQWiVvk96JhKoYjNPPrYEpHlTdTQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/semver@^7.3.4":
   version "7.3.9"
   resolved "https://registry.npmmirror.com/@types/semver/-/semver-7.3.9.tgz#152c6c20a7688c30b967ec1841d31ace569863fc"

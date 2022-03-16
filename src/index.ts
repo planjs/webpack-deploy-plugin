@@ -1,6 +1,5 @@
-import path from "path";
-import type { Compiler } from "webpack";
 import { WebpackError } from "webpack";
+import type { Compiler } from "webpack";
 import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
 import multimatch from "multimatch";
 
@@ -83,9 +82,7 @@ class WebpackDeployPlugin {
       } = this.target;
 
       const assets = multimatch(
-        Object.keys(stats.compilation.assets).map((f) =>
-          path.join(outputDir, f)
-        ),
+        Object.keys(stats.compilation.assets),
         patterns
       );
 

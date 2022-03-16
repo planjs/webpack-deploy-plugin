@@ -9,14 +9,13 @@ export default (fixture, options = {}) => {
     entry: `./${fixture}`,
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "bundle.js",
+      filename: "static/js/[name].[contenthash:8].js",
     },
     plugins: [
       new WebpackDeployPlugin({
         targets: {
           type: "rsync",
-          rsyncOptions: "./dist",
-          exclude: "**/bundle.js",
+          dest: "./dist/",
         },
       }),
     ],
