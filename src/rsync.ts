@@ -33,13 +33,21 @@ function rsync(
     // @ts-ignore 类型缺失
     rsync.env(process.env);
 
-    rsync.execute((error, code, cmd) => {
-      if (error) {
-        console.log(cmd);
-        reject(error);
+    rsync.execute(
+      (error, code, cmd) => {
+        if (error) {
+          console.log(cmd);
+          reject(error);
+        }
+        resolve();
+      },
+      (stdout) => {
+        process.stdout.write(stdout.toString("utf-8") + "\n");
+      },
+      (stderr) => {
+        process.stdout.write(stderr.toString("utf-8") + "\n");
       }
-      resolve();
-    });
+    );
   });
 }
 

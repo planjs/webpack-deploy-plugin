@@ -78,7 +78,7 @@
     "@babel/runtime": "^7.17.2",
     "multimatch": "5.0.0",
     "node-ssh": "^12.0.3",
-    "oss-upload-tool": "^0.1.0",
+    "oss-upload-tool": "^0.1.1",
     "rsync": "^0.6.1",
     "schema-utils": "^4.0.0",
     "@types/rsync": "^0.4.32"
