@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/planjs/webpack-deploy-plugin/compare/stable-0.0.3...stable-0.0.4) (2022-03-18)
+
+
+### Bug Fixes
+
+* bash str len over len ([83a3929](https://github.com/planjs/webpack-deploy-plugin/commit/83a39296abc82764096ae90299085a477cab0406))
+
 ### [0.0.3](https://github.com/planjs/webpack-deploy-plugin/compare/stable-0.0.2...stable-0.0.3) (2022-03-16)
 
 
