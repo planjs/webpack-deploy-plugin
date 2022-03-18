@@ -2,9 +2,11 @@ import { WebpackError } from "webpack";
 import type { Compiler } from "webpack";
 import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
 import multimatch from "multimatch";
+import { validate } from "schema-utils";
 
 import rsync from "./rsync";
 import { pluginName, logPrefix } from "./const";
+const schema = require("./options.json");
 
 type TargetItem = {
   type?: "rsync" | "oss";
@@ -56,6 +58,7 @@ class WebpackDeployPlugin {
   options: WebpackDeployPluginOptions;
 
   constructor(options: WebpackDeployPluginOptions) {
+    validate(schema, options);
     this.options = options;
   }
 

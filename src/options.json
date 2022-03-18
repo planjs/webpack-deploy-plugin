@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "title": "webpack-deploy-plugin options",
+  "properties": {
+    "targets": {
+      "type": ["object", "array"]
+    },
+    "env": {
+      "type": "string"
+    }
+  },
+  "required": ["targets"],
+  "additionalProperties": false
+}
