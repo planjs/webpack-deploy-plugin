@@ -1,5 +1,6 @@
 # webpack-deploy-plugin
 
+![npm](https://img.shields.io/npm/v/@planjs/webpack-deploy-plugin?label=latest)
 [![test](https://github.com/planjs/webpack-deploy-plugin/actions/workflows/test.yml/badge.svg)](https://github.com/planjs/webpack-deploy-plugin/actions/workflows/test.yml)
 
 ## Install
