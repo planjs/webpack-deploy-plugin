@@ -4,8 +4,7 @@ import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
 import multimatch from "multimatch";
 
 import rsync from "./rsync";
-
-const pluginName = "WebpackDeployPlugin";
+import { pluginName, logPrefix } from "./const";
 
 type TargetItem = {
   type?: "rsync" | "oss";
@@ -125,8 +124,6 @@ class WebpackDeployPlugin {
     return targets as TargetItem;
   }
 }
-
-const logPrefix = `[${pluginName}] `;
 
 function log(...rest) {
   return console.log.call(null, logPrefix, ...rest);
