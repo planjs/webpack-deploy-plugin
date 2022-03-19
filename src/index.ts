@@ -8,7 +8,7 @@ import rsync from "./rsync";
 import { pluginName, logPrefix } from "./const";
 const schema = require("./options.json");
 
-type TargetItem = {
+export type TargetItem = {
   type?: "rsync" | "oss";
   /**
    * Upload file to directory
@@ -40,7 +40,7 @@ type TargetItem = {
   onUploadFinish?: (stats: Stats) => void | Promise<void>;
 };
 
-type WebpackDeployPluginOptions = {
+export type WebpackDeployPluginOptions = {
   /**
    * Upload related configuration
    * If configured as an object, the key is the environment, and the value is the upload configuration
@@ -137,4 +137,4 @@ function logWithError(str: string) {
   return new WebpackError(`${logPrefix}${str}`);
 }
 
-module.exports = WebpackDeployPlugin;
+export default module.exports = WebpackDeployPlugin;
