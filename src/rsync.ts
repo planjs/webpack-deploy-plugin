@@ -62,7 +62,7 @@ function rsync(
 
   const _source = Array.isArray(source) ? source : [source];
 
-  const defaultLen = 100;
+  const defaultLen = 100 + (destination || "").length;
   let count = defaultLen;
 
   const chunkList = _source.reduce<string[][]>(
