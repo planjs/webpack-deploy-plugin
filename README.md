@@ -90,5 +90,5 @@ Type: `object`
 > Detailed reference [oss-upload-tool](https://github.com/planjs/stan/tree/master/packages/oss-upload-tool)
 
 ### `onUploadFinish`
-Type: `function`   
+Type: `(stats: Stats) => void | Promise<void>`   
 Upload complete event.

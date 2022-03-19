@@ -51,6 +51,7 @@
     "url": "git+https://github.com/planjs/webpack-deploy-plugin.git"
   },
   "homepage": "https://github.com/planjs/webpack-deploy-plugin#readme",
+  "bugs": "https://github.com/planjs/webpack-deploy-plugin/issues",
   "engines": {
     "node": ">=6.9"
   },

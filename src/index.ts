@@ -1,5 +1,5 @@
 import { WebpackError } from "webpack";
-import type { Compiler } from "webpack";
+import type { Compiler, Stats } from "webpack";
 import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
 import multimatch from "multimatch";
 import { validate } from "schema-utils";
@@ -37,7 +37,7 @@ type TargetItem = {
   /**
    * Upload finish callback
    */
-  onUploadFinish?: () => void | Promise<void>;
+  onUploadFinish?: (stats: Stats) => void | Promise<void>;
 };
 
 type WebpackDeployPluginOptions = {
@@ -112,7 +112,7 @@ class WebpackDeployPlugin {
         return;
       }
 
-      await onUploadFinish?.();
+      await onUploadFinish?.(stats);
 
       log("Uploaded successfully.");
     });
