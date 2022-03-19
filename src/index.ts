@@ -37,7 +37,7 @@ type TargetItem = {
   /**
    * Upload finish callback
    */
-  onUploadFinish?: () => void;
+  onUploadFinish?: () => void | Promise<void>;
 };
 
 type WebpackDeployPluginOptions = {
@@ -112,7 +112,7 @@ class WebpackDeployPlugin {
         return;
       }
 
-      onUploadFinish?.();
+      await onUploadFinish?.();
 
       log("Uploaded successfully.");
     });

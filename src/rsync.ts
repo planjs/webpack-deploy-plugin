@@ -68,11 +68,11 @@ function rsync(
     (acc, item) => {
       if (typeof item !== "string") return acc;
 
+      count += item.length;
       if (count > max) {
         acc.push([item]);
         count = defaultLen;
       } else {
-        count += item.length;
         acc[acc.length - 1].push(item);
       }
       return acc;
