@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.7 (2022-03-19)
+
+
+### Features
+
+* onUploadFinish add state params ([694dc03](https://github.com/planjs/webpack-deploy-plugin/commit/694dc03b4d4fadbd6267de951f1ae2535a022d5e))
+
 ### 0.0.6 (2022-03-19)
 
 
