@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.10 (2022-03-19)
+
+
+### Bug Fixes
+
+* window rsync len ([b5e0967](https://github.com/planjs/webpack-deploy-plugin/commit/b5e0967c2fa6a438d704c291ac67917b405de228))
+
 ### 0.0.9 (2022-03-19)
 
 ### 0.0.8 (2022-03-19)
