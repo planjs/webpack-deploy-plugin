@@ -60,6 +60,11 @@ function rsync(
     max = WindowMaxShellLen;
   }
 
+  // 有些环境命令行最长长度配置不对，使用这个更改切割规则
+  if (+process.env.MAX_COMMAND_LINE_LIMIT) {
+    max = +process.env.MAX_COMMAND_LINE_LIMIT;
+  }
+
   const _source = Array.isArray(source) ? source : [source];
 
   const defaultLen = 100 + (destination || "").length;

@@ -15,7 +15,7 @@ export default (fixture, options = {}) => {
       new WebpackDeployPlugin({
         targets: {
           type: "rsync",
-          dest: "./dist/",
+          dest: "./rsync/",
         },
       }),
     ],

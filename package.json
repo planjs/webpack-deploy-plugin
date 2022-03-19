@@ -17,6 +17,8 @@
     "oss-upload-tool",
     "rsync",
     "deploy",
+    "oss",
+    "cos",
     "webpack-deploy-plugin"
   ],
   "files": [
