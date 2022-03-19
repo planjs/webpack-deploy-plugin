@@ -62,8 +62,8 @@ function rsync(
 
   const _source = Array.isArray(source) ? source : [source];
 
-  let defaultLen,
-    count = 100;
+  const defaultLen = 0;
+  let count = 100;
   const chunkList = _source.reduce<string[][]>(
     (acc, item) => {
       if (typeof item !== "string") return acc;
