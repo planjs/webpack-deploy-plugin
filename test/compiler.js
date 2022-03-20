@@ -16,6 +16,8 @@ export default (fixture, options = {}) => {
         targets: {
           type: "rsync",
           dest: "./rsync/",
+          execUploadStartScripts: ["echo", "start"],
+          execUploadFinishScripts: [["echo", "end"], ["pwd"]],
         },
       }),
     ],

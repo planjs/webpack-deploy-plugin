@@ -3,6 +3,7 @@ import type { Compiler, Stats } from "webpack";
 import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
 import multimatch from "multimatch";
 import { validate } from "schema-utils";
+import execa from "execa";
 
 import rsync from "./rsync";
 import { pluginName, logPrefix } from "./const";
@@ -35,6 +36,20 @@ export type TargetItem = {
   };
   OSSUploadOptions?: OSSUploadOptions;
   /**
+   * Executed when upload starts
+   * cwd: webpack work dir
+   */
+  execUploadStartScripts?: string[][] | string[];
+  /**
+   * Executed when upload finish
+   * cwd: webpack work dir
+   */
+  execUploadFinishScripts?: string[][] | string[];
+  /**
+   * before upload callback
+   */
+  onUploadStart?: (stats: Stats) => void | Promise<void>;
+  /**
    * Upload finish callback
    */
   onUploadFinish?: (stats: Stats) => void | Promise<void>;
@@ -65,6 +80,7 @@ class WebpackDeployPlugin {
   apply = (compiler: Compiler) => {
     const {
       output: { path: outputDir },
+      context,
     } = compiler.options;
     compiler.hooks.done.tapPromise(this.name, async (stats) => {
       const { compilation } = stats;
@@ -80,7 +96,10 @@ class WebpackDeployPlugin {
         OSSUploadOptions,
         dest,
         patterns = "**",
+        onUploadStart,
         onUploadFinish,
+        execUploadFinishScripts,
+        execUploadStartScripts,
       } = this.target;
 
       const assets = multimatch(
@@ -92,6 +111,9 @@ class WebpackDeployPlugin {
         compilation.errors.push(logWithError("No files to upload."));
         return;
       }
+
+      onUploadStart?.(stats);
+      execScripts(execUploadStartScripts, { cwd: context });
 
       if (type === "rsync") {
         await rsync(assets, dest, rsyncOptions?.args, outputDir);
@@ -113,6 +135,7 @@ class WebpackDeployPlugin {
       }
 
       await onUploadFinish?.(stats);
+      execScripts(execUploadFinishScripts, { cwd: context });
 
       log("Uploaded successfully.");
     });
@@ -135,6 +158,25 @@ function log(...rest) {
 function logWithError(str: string) {
   log(str);
   return new WebpackError(`${logPrefix}${str}`);
+}
+
+function execScripts(
+  scripts: string[][] | string[],
+  options?: execa.SyncOptions
+) {
+  if (!scripts?.length) return;
+
+  const arr = (Array.isArray(scripts[0]) ? scripts : [scripts]) as string[][];
+  for (const script of arr) {
+    const { exitCode, stderr } = execa.sync(script[0], script.slice(1), {
+      stdout: "inherit",
+      stderr: "inherit",
+      ...options,
+    });
+    if (exitCode !== 0) {
+      throw new Error(stderr);
+    }
+  }
 }
 
 export default module.exports = WebpackDeployPlugin;

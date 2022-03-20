@@ -85,15 +85,28 @@ The paths to match against will be uploaded.
 Rsync args.   
 Type: `{ args: string[][] }`   
 > eg: `['bwlimit', 10]` [rsync](https://linux.die.net/man/1/rsync)   
-> Detailed reference [node-rsync](https://github.com/mattijs/node-rsync)
 
 ### `OSSUploadOptions`
 Type: `object` 
 > Detailed reference [oss-upload-tool](https://github.com/planjs/stan/tree/master/packages/oss-upload-tool)
 
+### `onUploadStart`
+Type: `(stats: Stats) => void | Promise<void>`   
+Before upload event.
+
 ### `onUploadFinish`
 Type: `(stats: Stats) => void | Promise<void>`   
 Upload complete event.
+
+### `execUploadStartScripts`
+Type: `string[][] | string[]`   
+before Upload start exec script.
+> Detailed reference [execa](https://github.com/sindresorhus/execa)
+
+### `execUploadFinishScripts`
+Type: `string[][] | string[]`   
+before Upload finish exec script.
+> Detailed reference [execa](https://github.com/sindresorhus/execa)
 
 ## FQA
 ### Window Rsync error: `The command line is too long`

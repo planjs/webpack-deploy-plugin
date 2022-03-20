@@ -4,7 +4,7 @@
   "description": "The webpack plugin handles various uploads of front-end files",
   "main": "lib/index.js",
   "scripts": {
-    "prepare": "stan-builder --bundler babel --cjs --runtime",
+    "prepare": "stan-builder --bundler babel --cjs --runtime -min",
     "dev": "npm run prepare -- --watch",
     "prepublishOnly": "npm run release",
     "release": "./scripts/release.sh",
@@ -41,7 +41,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "memfs": "^3.4.1",
-    "stan-builder": "^0.14.4",
+    "stan-builder": "^0.14.6",
     "typescript": "^4.6.2",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2",
@@ -80,10 +80,8 @@
   "dependencies": {
     "@babel/runtime": "^7.17.2",
     "multimatch": "5.0.0",
-    "node-ssh": "^12.0.3",
-    "oss-upload-tool": "^0.1.1",
-    "rsync": "^0.6.1",
-    "schema-utils": "^4.0.0",
-    "@types/rsync": "^0.4.32"
+    "oss-upload-tool": "latest",
+    "execa": "5.1.1",
+    "schema-utils": "^4.0.0"
   }
 }

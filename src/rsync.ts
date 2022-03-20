@@ -1,5 +1,5 @@
 import os from "os";
-import Rs from "rsync";
+import execa from "execa";
 
 import { logPrefix, UnixMaxShellLen, WindowMaxShellLen } from "./const";
 
@@ -19,39 +19,30 @@ function rsync(
 ) {
   function exec(source: string | string[]) {
     return new Promise<void>((resolve, reject) => {
-      let rsync = new Rs()
-        .flags("avz")
-        .shell("ssh")
-        .source(source)
-        .set("R")
-        .destination(destination);
+      const target = Array.isArray(source) ? source : [source];
 
-      if (args?.length) {
-        rsync = args.reduce((acc, [k, v]) => acc.set(k, v), rsync);
-      }
-
-      if (cwd) {
-        rsync.cwd(cwd);
-      }
-
-      // @ts-ignore 类型缺失
-      rsync.env(process.env);
-
-      rsync.execute(
-        (error, code, cmd) => {
-          if (error) {
-            console.log(logPrefix, code, error, cmd);
-            reject(error);
-          }
-          resolve();
-        },
-        (stdout) => {
-          process.stdout.write(stdout.toString("utf-8") + "\n");
-        },
-        (stderr) => {
-          process.stdout.write(stderr.toString("utf-8") + "\n");
-        }
+      const res = execa.sync(
+        "rsync",
+        [
+          "-avzR",
+          ...(args || []).reduce<string[]>((acc, item: string[]) => {
+            acc.push(`--${item.join("=")}`);
+            return acc;
+          }, []),
+          ...target,
+          destination,
+        ],
+        { cwd, env: process.env }
       );
+
+      console.log("");
+      if (res.exitCode === 0) {
+        console.log(res.stdout);
+        resolve();
+      } else {
+        console.log(logPrefix, res.stderr);
+        reject(new Error(res.stderr));
+      }
     });
   }
 
@@ -74,7 +65,7 @@ function rsync(
     (acc, item) => {
       if (typeof item !== "string") return acc;
 
-      count += item.length;
+      count += item.length + 1;
       if (count > max) {
         acc.push([item]);
         count = defaultLen;
