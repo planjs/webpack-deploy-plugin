@@ -1,6 +1,6 @@
 {
   "name": "@planjs/webpack-deploy-plugin",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "The webpack plugin handles various uploads of front-end files",
   "main": "lib/index.js",
   "scripts": {
