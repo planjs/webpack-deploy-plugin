@@ -10,12 +10,14 @@ import { logPrefix, UnixMaxShellLen, WindowMaxShellLen } from "./const";
  * @param destination
  * @param args
  * @param cwd
+ * @param options
  */
 function rsync(
   source: string | string[],
   destination: string,
   args?: [string, string?][],
-  cwd?: string
+  cwd?: string,
+  options?: execa.SyncOptions
 ) {
   function exec(source: string | string[]) {
     return new Promise<void>((resolve, reject) => {
@@ -32,7 +34,7 @@ function rsync(
           ...target,
           destination,
         ],
-        { cwd, env: process.env }
+        { detached: true, ...options, cwd }
       );
 
       console.log("");

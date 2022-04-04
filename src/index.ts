@@ -53,6 +53,10 @@ export type TargetItem = {
    * Upload finish callback
    */
   onUploadFinish?: (stats: Stats) => void | Promise<void>;
+  /**
+   * @link {execa.SyncOptions}
+   */
+  execaOptions?: execa.SyncOptions;
 };
 
 export type WebpackDeployPluginOptions = {
@@ -100,6 +104,7 @@ class WebpackDeployPlugin {
         onUploadFinish,
         execUploadFinishScripts,
         execUploadStartScripts,
+        execaOptions,
       } = this.target;
 
       const assets = multimatch(
@@ -113,10 +118,10 @@ class WebpackDeployPlugin {
       }
 
       onUploadStart?.(stats);
-      execScripts(execUploadStartScripts, { cwd: context });
+      execScripts(execUploadStartScripts, { ...execaOptions, cwd: context });
 
       if (type === "rsync") {
-        await rsync(assets, dest, rsyncOptions?.args, outputDir);
+        await rsync(assets, dest, rsyncOptions?.args, outputDir, execaOptions);
       } else if (type === "oss") {
         await ossUpload({
           cwd: outputDir,
@@ -135,7 +140,7 @@ class WebpackDeployPlugin {
       }
 
       await onUploadFinish?.(stats);
-      execScripts(execUploadFinishScripts, { cwd: context });
+      execScripts(execUploadFinishScripts, { ...execaOptions, cwd: context });
 
       log("Uploaded successfully.");
     });
@@ -171,6 +176,7 @@ function execScripts(
     const { exitCode, stderr } = execa.sync(script[0], script.slice(1), {
       stdout: "inherit",
       stderr: "inherit",
+      detached: true,
       ...options,
     });
     if (exitCode !== 0) {

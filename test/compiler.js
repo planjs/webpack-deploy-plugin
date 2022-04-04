@@ -27,7 +27,6 @@ export default (fixture, options = {}) => {
     compiler.run((err, stats) => {
       if (err) reject(err);
       if (stats.hasErrors()) reject(new Error(stats.toJson().errors));
-
       resolve(stats);
     });
   });
