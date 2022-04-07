@@ -89,6 +89,11 @@ class WebpackDeployPlugin {
     compiler.hooks.done.tapPromise(this.name, async (stats) => {
       const { compilation } = stats;
 
+      if (stats.hasErrors()) {
+        log("There are compilation errors, skip uploading.");
+        return;
+      }
+
       if (!this.target) {
         compilation.errors.push(logWithError("Missing upload configuration."));
         return;
