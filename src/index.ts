@@ -36,6 +36,11 @@ export type TargetItem = {
   };
   OSSUploadOptions?: OSSUploadOptions;
   /**
+   * Maximum number of failed retries
+   * @default 0
+   */
+  maxAttempts?: number;
+  /**
    * Executed when upload starts
    * cwd: webpack work dir
    */

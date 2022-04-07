@@ -90,6 +90,10 @@ Type: `{ args: string[][] }`
 Type: `object` 
 > Detailed reference [oss-upload-tool](https://github.com/planjs/stan/tree/master/packages/oss-upload-tool)
 
+### `maxAttempts`
+Type: `number`      
+Maximum number of failed retries.   
+
 ### `onUploadStart`
 Type: `(stats: Stats) => void | Promise<void>`   
 Before upload event.
