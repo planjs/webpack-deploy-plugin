@@ -5,7 +5,7 @@ import multimatch from "multimatch";
 import { validate } from "schema-utils";
 import execa from "execa";
 
-import rsync from "./rsync";
+import rsync, { checkRsync } from "./rsync";
 import { pluginName, logPrefix } from "./const";
 const schema = require("./options.json");
 
@@ -85,6 +85,8 @@ class WebpackDeployPlugin {
 
   options: WebpackDeployPluginOptions;
 
+  private canDeploy = true;
+
   constructor(options: WebpackDeployPluginOptions) {
     validate(schema, options);
     this.options = options;
@@ -95,8 +97,23 @@ class WebpackDeployPlugin {
       output: { path: outputDir },
       context,
     } = compiler.options;
+    compiler.hooks.run.tap(pluginName, () => {
+      if (this.target?.type === "rsync") {
+        checkRsync().catch(() => {
+          this.canDeploy = false;
+          log(
+            "Rsync is not supported, it needs to be installed first, this compilation will not be deployed, it is recommended to cancel the installation of rsync first."
+          );
+        });
+      }
+    });
+
     compiler.hooks.done.tapPromise(this.name, async (stats) => {
       const { compilation } = stats;
+
+      if (!this.canDeploy) {
+        return;
+      }
 
       if (stats.hasErrors()) {
         log("There are compilation errors, skip uploading.");

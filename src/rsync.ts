@@ -80,4 +80,17 @@ function rsync(
   return Promise.all(chunkList.map(exec));
 }
 
+export function checkRsync() {
+  return new Promise((resolve, reject) => {
+    const res = execa.sync(os.type() === "Windows_NT" ? "where" : "whereis", [
+      "rsync",
+    ]);
+    if (res.exitCode === 0) {
+      resolve(res.stdout);
+      return;
+    }
+    reject(new Error(res.stderr));
+  });
+}
+
 export default rsync;
