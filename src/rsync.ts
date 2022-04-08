@@ -82,7 +82,7 @@ function rsync(
 
 export function checkRsync() {
   return new Promise((resolve, reject) => {
-    const res = execa.sync("whereis", ["rsync"]);
+    const res = execa.sync("where", ["rsync"]);
     if (res.exitCode === 0) {
       resolve(res.stdout);
       return;
