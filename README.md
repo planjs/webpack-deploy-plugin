@@ -13,6 +13,12 @@ Using npm:
 npm install @planjs/webpack-deploy-plugin --save-dev
 ```
 
+Using yarn:
+
+```console
+yarn add @planjs/webpack-deploy-plugin -D
+```
+
 ## Usage
 
 `webpack.Stats` All output content will be uploaded to the server, or oss.
@@ -88,7 +94,18 @@ Type: `{ args: string[][] }`
 
 ### `OSSUploadOptions`
 Type: `object` 
-> Detailed reference [oss-upload-tool](https://github.com/planjs/stan/tree/master/packages/oss-upload-tool)
+> Detailed reference [oss-upload-tool](https://github.com/planjs/stan/tree/master/packages/oss-upload-tool)   
+> It also supports related environment variable configuration.
+
+### `maxAttempts`
+Type: `number`      
+Maximum number of failed retries.   
+Only valid for `oss-upload-tool`, `rsync` does not need to retry.   
+
+### `timeout`
+Type: `number`      
+Execution timeout.   
+If it is `rsync`, it is the timeout period for executing the command. If it is `oss-upload-tool`, it is the single file upload timeout period.  
 
 ### `onUploadStart`
 Type: `(stats: Stats) => void | Promise<void>`   

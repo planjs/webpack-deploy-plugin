@@ -17,7 +17,7 @@ specifiers:
   multimatch: 5.0.0
   oss-upload-tool: latest
   schema-utils: ^4.0.0
-  stan-builder: ^0.14.19
+  stan-builder: ^0.14.22
   standard-version: ^9.3.2
   typescript: ^4.6.2
   webpack: ^5.70.0
@@ -27,7 +27,7 @@ dependencies:
   '@babel/runtime': 7.17.8
   execa: 5.1.1
   multimatch: 5.0.0
-  oss-upload-tool: 0.2.14
+  oss-upload-tool: 0.2.17
   schema-utils: 4.0.0
 
 devDependencies:
@@ -42,7 +42,7 @@ devDependencies:
   jest: 27.5.1
   lint-staged: 11.2.6
   memfs: 3.4.1
-  stan-builder: 0.14.19_ee885bc7281b682b6adbed6ae09ee090
+  stan-builder: 0.14.22_ee885bc7281b682b6adbed6ae09ee090
   standard-version: 9.3.2
   typescript: 4.6.3
   webpack: 5.71.0_webpack-cli@4.9.2
@@ -9298,15 +9298,15 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /oss-upload-tool/0.2.14:
-    resolution: {integrity: sha512-gY2obhJETOZLJrvWIQJrIQ4xYrScJENI9pKkZ7DC+dWpjO3G8X6dxtbINDfhwPglpAze3IdUszt2qVhsuSt/AQ==}
+  /oss-upload-tool/0.2.17:
+    resolution: {integrity: sha512-np6liWrya8fbP9llv3eI/1SxylAXLVG1drRRddWIAM/SzcJPdmVmn7awBN7mOShPM6R89a1HTd2sG/sTRsBiwA==}
     hasBin: true
     dependencies:
       '@planjs/utils': 1.15.6
       '@types/ali-oss': 6.16.3
       ali-oss: 6.17.1
       cos-nodejs-sdk-v5: 2.11.6
-      stan-utils: 0.9.15
+      stan-utils: 0.9.18
     transitivePeerDependencies:
       - supports-color
       - zen-observable
@@ -11267,8 +11267,8 @@ packages:
       escape-string-regexp: 2.0.0
     dev: true
 
-  /stan-builder/0.14.19_ee885bc7281b682b6adbed6ae09ee090:
-    resolution: {integrity: sha512-57n4CDZ7Ayjzy5baxGXHOvjscEzHCK6eR2DI9NxBNxD9O7qiiudzFvw9CeJ4z6f3Lg5jPsji0VdyPidH2hUjxA==}
+  /stan-builder/0.14.22_ee885bc7281b682b6adbed6ae09ee090:
+    resolution: {integrity: sha512-S4588SfVWf4vfnXYCiKGsqWFgF7zGesyZZXq86Cp74/OVxTWogcO4YJfzwOQ6gDAJHH44fbwL0TlVMSOAufDQQ==}
     hasBin: true
     peerDependencies:
       '@vue/compiler-sfc': '*'
@@ -11329,7 +11329,7 @@ packages:
       rollup-plugin-terser: 7.0.2_rollup@2.70.1
       rollup-plugin-typescript2: 0.31.2_6ec1f5fc5b13027c350d7531c17255fe
       rollup-plugin-visualizer: 5.6.0_rollup@2.70.1
-      stan-utils: 0.9.15
+      stan-utils: 0.9.18
       through2: 4.0.2
       typescript: 4.6.3
       vinyl-fs: 3.0.3
@@ -11346,8 +11346,8 @@ packages:
       - zen-observable
     dev: true
 
-  /stan-utils/0.9.15:
-    resolution: {integrity: sha512-BV039jhBJap/pyAl/fHovCQthaNcmIjG8HTzZiZvi5jkUgv3z20JdeFA92HCkeu/yEnabN19u0qDjxFnUu3JXg==}
+  /stan-utils/0.9.18:
+    resolution: {integrity: sha512-tA7lJcHGf5UrVD30thrWQjkx/5k7324qwAJ9yqKZK8NSdNSIWFQItMZkaO3haXrZU7NiKTq3gVme8A28UG0j7Q==}
     dependencies:
       '@planjs/utils': 1.15.6
       '@types/cross-spawn': 6.0.2

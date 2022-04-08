@@ -36,6 +36,15 @@ export type TargetItem = {
   };
   OSSUploadOptions?: OSSUploadOptions;
   /**
+   * Maximum number of failed retries
+   * @default 0
+   */
+  maxAttempts?: number;
+  /**
+   * Execution timeout
+   */
+  timeout?: number;
+  /**
    * Executed when upload starts
    * cwd: webpack work dir
    */
@@ -110,6 +119,8 @@ class WebpackDeployPlugin {
         execUploadFinishScripts,
         execUploadStartScripts,
         execaOptions,
+        maxAttempts = 3,
+        timeout,
       } = this.target;
 
       const assets = multimatch(
@@ -123,13 +134,22 @@ class WebpackDeployPlugin {
       }
 
       onUploadStart?.(stats);
-      execScripts(execUploadStartScripts, { ...execaOptions, cwd: context });
+      execScripts(execUploadStartScripts, {
+        ...execaOptions,
+        cwd: context,
+      });
 
       if (type === "rsync") {
-        await rsync(assets, dest, rsyncOptions?.args, outputDir, execaOptions);
+        await rsync(assets, dest, rsyncOptions?.args, {
+          timeout,
+          ...execaOptions,
+          cwd: outputDir,
+        });
       } else if (type === "oss") {
         await ossUpload({
           cwd: outputDir,
+          maxAttempts,
+          timeout,
           ...OSSUploadOptions,
           targets: {
             dest: dest,
@@ -145,7 +165,10 @@ class WebpackDeployPlugin {
       }
 
       await onUploadFinish?.(stats);
-      execScripts(execUploadFinishScripts, { ...execaOptions, cwd: context });
+      execScripts(execUploadFinishScripts, {
+        ...execaOptions,
+        cwd: context,
+      });
 
       log("Uploaded successfully.");
     });

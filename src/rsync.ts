@@ -8,15 +8,13 @@ import { logPrefix, UnixMaxShellLen, WindowMaxShellLen } from "./const";
  * 这里默认会保留文件目录结构
  * @param source
  * @param destination
- * @param args
- * @param cwd
+ * @param args rsync args
  * @param options
  */
 function rsync(
   source: string | string[],
   destination: string,
   args?: [string, string?][],
-  cwd?: string,
   options?: execa.SyncOptions
 ) {
   function exec(source: string | string[]) {
@@ -34,7 +32,7 @@ function rsync(
           ...target,
           destination,
         ],
-        { detached: true, ...options, cwd }
+        { detached: true, ...options }
       );
 
       console.log("");
