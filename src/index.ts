@@ -58,13 +58,16 @@ export type TargetItem = {
   /**
    * before upload callback
    */
-  onUploadStart?: (stats: Stats) => void | Promise<void>;
+  onUploadStart?: (stats: Stats, shelljs: typeof shell) => void | Promise<void>;
   /**
    * Upload finish callback
    */
-  onUploadFinish?: (stats: Stats) => void | Promise<void>;
+  onUploadFinish?: (
+    stats: Stats,
+    shelljs: typeof shell
+  ) => void | Promise<void>;
   /**
-   * @link {import("shelljs").ExecOptions}
+   * @link {require("shelljs").ExecOptions}
    */
   execOptions?: ExecOptions;
 };
@@ -151,7 +154,7 @@ class WebpackDeployPlugin {
         return;
       }
 
-      onUploadStart?.(stats);
+      onUploadStart?.(stats, shell);
       execScripts(execUploadStartScripts, {
         ...execOptions,
         cwd: context,
@@ -182,7 +185,7 @@ class WebpackDeployPlugin {
         return;
       }
 
-      await onUploadFinish?.(stats);
+      await onUploadFinish?.(stats, shell);
       execScripts(execUploadFinishScripts, {
         ...execOptions,
         cwd: context,

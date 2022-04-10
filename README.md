@@ -108,11 +108,11 @@ Execution timeout.
 If it is `rsync`, it is the timeout period for executing the command. If it is `oss-upload-tool`, it is the single file upload timeout period.  
 
 ### `onUploadStart`
-Type: `(stats: Stats) => void | Promise<void>`   
+Type: `(stats: Stats, shelljs) => void | Promise<void>`   
 Before upload event.
 
 ### `onUploadFinish`
-Type: `(stats: Stats) => void | Promise<void>`   
+Type: `(stats: Stats, shelljs) => void | Promise<void>`   
 Upload complete event.
 
 ### `execUploadStartScripts`
