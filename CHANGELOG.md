@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.17 (2022-04-10)
+
+
+### Features
+
+* build hook add shelljs ([96ab5d5](https://github.com/planjs/webpack-deploy-plugin/commit/96ab5d5141a469f21ce20b2d35fe79b8305c4934))
+
 ### 0.0.16 (2022-04-10)
 
 
