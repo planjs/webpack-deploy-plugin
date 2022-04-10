@@ -1,5 +1,6 @@
 import os from "os";
-import execa from "execa";
+import shell from "shelljs";
+import type { ExecOptions, ShellString } from "shelljs";
 
 import { logPrefix, UnixMaxShellLen, WindowMaxShellLen } from "./const";
 
@@ -15,15 +16,15 @@ function rsync(
   source: string | string[],
   destination: string,
   args?: [string, string?][],
-  options?: execa.SyncOptions
+  options?: ExecOptions
 ) {
   function exec(source: string | string[]) {
     return new Promise<void>((resolve, reject) => {
       const target = Array.isArray(source) ? source : [source];
 
-      const res = execa.sync(
-        "rsync",
+      const res = shell.exec(
         [
+          "rsync",
           "-avzR",
           ...(args || []).reduce<string[]>((acc, item: string[]) => {
             acc.push(`--${item.join("=")}`);
@@ -31,12 +32,12 @@ function rsync(
           }, []),
           ...target,
           destination,
-        ],
-        { detached: true, ...options }
-      );
+        ].join(" "),
+        { ...options }
+      ) as ShellString;
 
       console.log("");
-      if (res.exitCode === 0) {
+      if (res.code === 0) {
         console.log(res.stdout);
         resolve();
       } else {
@@ -82,10 +83,10 @@ function rsync(
 
 export function checkRsync() {
   return new Promise((resolve, reject) => {
-    const res = execa.sync(os.type() === "Windows_NT" ? "where" : "whereis", [
-      "rsync",
-    ]);
-    if (res.exitCode === 0) {
+    const res = shell.exec(
+      (os.type() === "Windows_NT" ? "where" : "whereis") + " rsync"
+    );
+    if (res.code === 0) {
       resolve(res.stdout);
       return;
     }

@@ -3,7 +3,8 @@ import type { Compiler, Stats } from "webpack";
 import { ossUpload, OSSUploadOptions } from "oss-upload-tool";
 import multimatch from "multimatch";
 import { validate } from "schema-utils";
-import execa from "execa";
+import shell from "shelljs";
+import type { ExecOptions, ShellString } from "shelljs";
 
 import rsync, { checkRsync } from "./rsync";
 import { pluginName, logPrefix } from "./const";
@@ -63,9 +64,9 @@ export type TargetItem = {
    */
   onUploadFinish?: (stats: Stats) => void | Promise<void>;
   /**
-   * @link {execa.SyncOptions}
+   * @link {import("shelljs").ExecOptions}
    */
-  execaOptions?: execa.SyncOptions;
+  execOptions?: ExecOptions;
 };
 
 export type WebpackDeployPluginOptions = {
@@ -135,7 +136,7 @@ class WebpackDeployPlugin {
         onUploadFinish,
         execUploadFinishScripts,
         execUploadStartScripts,
-        execaOptions,
+        execOptions,
         maxAttempts = 3,
         timeout,
       } = this.target;
@@ -152,14 +153,14 @@ class WebpackDeployPlugin {
 
       onUploadStart?.(stats);
       execScripts(execUploadStartScripts, {
-        ...execaOptions,
+        ...execOptions,
         cwd: context,
       });
 
       if (type === "rsync") {
         await rsync(assets, dest, rsyncOptions?.args, {
           timeout,
-          ...execaOptions,
+          ...execOptions,
           cwd: outputDir,
         });
       } else if (type === "oss") {
@@ -183,7 +184,7 @@ class WebpackDeployPlugin {
 
       await onUploadFinish?.(stats);
       execScripts(execUploadFinishScripts, {
-        ...execaOptions,
+        ...execOptions,
         cwd: context,
       });
 
@@ -210,21 +211,15 @@ function logWithError(str: string) {
   return new WebpackError(`${logPrefix}${str}`);
 }
 
-function execScripts(
-  scripts: string[][] | string[],
-  options?: execa.SyncOptions
-) {
+function execScripts(scripts: string[][] | string[], options?: ExecOptions) {
   if (!scripts?.length) return;
 
   const arr = (Array.isArray(scripts[0]) ? scripts : [scripts]) as string[][];
   for (const script of arr) {
-    const { exitCode, stderr } = execa.sync(script[0], script.slice(1), {
-      stdout: "inherit",
-      stderr: "inherit",
-      detached: true,
+    const { code, stderr } = shell.exec(script.join(" "), {
       ...options,
-    });
-    if (exitCode !== 0) {
+    }) as ShellString;
+    if (code !== 0) {
       throw new Error(stderr);
     }
   }

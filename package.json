@@ -81,7 +81,8 @@
     "@babel/runtime": "^7.17.2",
     "multimatch": "5.0.0",
     "oss-upload-tool": "latest",
-    "execa": "5.1.1",
-    "schema-utils": "^4.0.0"
+    "schema-utils": "^4.0.0",
+    "shelljs": "^0.8.5",
+    "@types/shelljs": "^0.8.11"
   }
 }
