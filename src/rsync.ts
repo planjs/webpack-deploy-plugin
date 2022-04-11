@@ -84,7 +84,10 @@ function rsync(
 export function checkRsync() {
   return new Promise((resolve, reject) => {
     const res = shell.exec(
-      (os.type() === "Windows_NT" ? "where" : "whereis") + " rsync"
+      (os.type() === "Windows_NT" ? "where" : "whereis") + " rsync",
+      {
+        silent: true,
+      }
     );
     if (res.code === 0) {
       resolve(res.stdout);

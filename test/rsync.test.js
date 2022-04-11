@@ -1,5 +1,5 @@
 import fs from "fs";
-import rsync, {checkRsync} from "../lib/rsync";
+import rsync, { checkRsync } from "../lib/rsync";
 
 describe("rsync", () => {
   it("Rsync file", async () => {
