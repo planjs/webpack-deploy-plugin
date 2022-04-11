@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.18 (2022-04-11)
+
+
+### Bug Fixes
+
+* disable which rsync output log ([bfe82b1](https://github.com/planjs/webpack-deploy-plugin/commit/bfe82b11aa84161429d87f1d5132377286a05b42))
+
 ### 0.0.17 (2022-04-10)
 
 
