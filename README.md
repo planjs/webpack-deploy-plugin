@@ -135,6 +135,10 @@ before Upload finish exec script.
 By default, window will use 8191 as the longest length, leave 100 for other parameters, and if the remaining length is too long, it will become multiple rsync commands.   
 If it still fails, it may be an environment problem, change the cutting rules through the variable `MAX_COMMAND_LINE_LIMIT`.
 
+### Not all output directory contents are copied
+By default, only the files on `compilation.assets` after webpack compilation will be copied. If you add files by other means, you can set isUploadOutputDir, 
+and the files in the entire output directory will be uploaded, and you can specify file upload through `patterns`.
+
 ## License
 
 MIT © [fupengl](https://github.com/fupengl)
