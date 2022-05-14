@@ -70,6 +70,11 @@ export type TargetItem = {
    * @link {require("shelljs").ExecOptions}
    */
   execOptions?: ExecOptions;
+  /**
+   * Whether to upload the output directory completely
+   * @default false `compilation.assets`
+   */
+  isUploadOutputDir?: boolean;
 };
 
 export type WebpackDeployPluginOptions = {
@@ -142,12 +147,12 @@ class WebpackDeployPlugin {
         execOptions,
         maxAttempts = 3,
         timeout,
+        isUploadOutputDir,
       } = this.target;
 
-      const assets = multimatch(
-        Object.keys(stats.compilation.assets),
-        patterns
-      );
+      const assets = isUploadOutputDir
+        ? patterns
+        : multimatch(Object.keys(stats.compilation.assets), patterns);
 
       if (!assets.length) {
         compilation.errors.push(logWithError("No files to upload."));

@@ -85,7 +85,12 @@ Type: `string`
 
 ### `patterns`
 Type: `string | string[]` [multimatch](https://www.npmjs.com/package/multimatch)   
-The paths to match against will be uploaded.   
+Paths based on `compilation.assets` or `output` folder matching will be uploaded.
+
+### `isUploadOutputDir`
+Type: `boolean`  
+Default: `false`
+By default, the file of `compilation.assets` is used, and when it is turned on, all the output folders will be uploaded.
 
 ### `rsyncOptions`
 Rsync args.   
