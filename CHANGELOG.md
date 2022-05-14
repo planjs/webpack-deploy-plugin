@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.19 (2022-05-14)
+
+
+### Features
+
+* add uploader output dir flag ([75d31fa](https://github.com/planjs/webpack-deploy-plugin/commit/75d31faad1fd17bde9b7835c83f424bb2bbe2ec9))
+
 ### 0.0.18 (2022-04-11)
 
 
