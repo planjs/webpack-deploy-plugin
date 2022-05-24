@@ -112,6 +112,11 @@ Type: `number`
 Execution timeout.   
 If it is `rsync`, it is the timeout period for executing the command. If it is `oss-upload-tool`, it is the single file upload timeout period.  
 
+### isUploadOutputDir
+Type: `boolean`   
+Default: false only `compilation.assets` files   
+Whether to upload the output directory completely.
+
 ### `onUploadStart`
 Type: `(stats: Stats, shelljs) => void | Promise<void>`   
 Before upload event.
